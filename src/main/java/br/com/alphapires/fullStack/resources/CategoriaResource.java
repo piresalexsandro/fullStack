@@ -1,29 +1,33 @@
 package br.com.alphapires.fullStack.resources;
 
 import br.com.alphapires.fullStack.domain.Categoria;
+import br.com.alphapires.fullStack.services.CategoriaService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping(value = "/categorias")
 public class CategoriaResource {
 
-    @GetMapping
-    public List<Categoria>  listar(){
+    @Autowired
+    private CategoriaService service;
 
-        Categoria c1 = new Categoria(1, "Software");
-        Categoria c2 = new Categoria(2, "Artificial Intelligence");
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<?> find(@PathVariable Integer id){
 
-        List<Categoria> list = new ArrayList<>();
+        Categoria categoria = null;
 
-        list.add(c1);
-        list.add(c2);
+        if(Objects.nonNull(id) && id > 0){
+            categoria = service.buscar(id);
+        }
 
-        return list;
+        return ResponseEntity.ok(categoria);
     }
 
 }
