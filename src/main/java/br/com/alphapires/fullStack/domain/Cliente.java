@@ -20,7 +20,12 @@ public class Cliente implements Serializable {
     private String nome;
     private String cpfOuCnpj;
     private String email;
+
+    @OneToMany(mappedBy = "cliente")
     private List<Endereco> enderecos;
+
+    @ElementCollection
+    @CollectionTable(name="TELEFONE")
     private Set<String> telefones = new HashSet<>();
     private Integer tipo;
 
