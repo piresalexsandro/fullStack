@@ -1,5 +1,6 @@
 package br.com.alphapires.fullStack.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -21,6 +22,7 @@ public class Cliente implements Serializable {
     private String cpfOuCnpj;
     private String email;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "cliente")
     private List<Endereco> enderecos;
 

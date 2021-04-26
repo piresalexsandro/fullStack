@@ -79,7 +79,7 @@ public class FullStackApplication implements CommandLineRunner {
 				"Sala 800","Centro","38777012",cli1, cidade2);
 
 //		cli1.getEnderecos().addAll(Arrays.asList(e1, e2));
-////
+
 		clienteRepository.saveAll(Collections.singletonList(cli1));
 		enderecoRepository.saveAll(Arrays.asList(e1, e2));
 
