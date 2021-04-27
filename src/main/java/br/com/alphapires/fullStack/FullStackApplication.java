@@ -1,12 +1,15 @@
 package br.com.alphapires.fullStack;
 
 import br.com.alphapires.fullStack.domain.*;
+import br.com.alphapires.fullStack.domain.enums.EstadoPagamento;
+import br.com.alphapires.fullStack.domain.enums.TipoCliente;
 import br.com.alphapires.fullStack.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Collections;
 
@@ -30,6 +33,12 @@ public class FullStackApplication implements CommandLineRunner {
 
 	@Autowired
 	EnderecoRepository enderecoRepository;
+
+	@Autowired
+	PedidoRepository pedidoRepository;
+
+	@Autowired
+	PagamentoRepository pagamentoRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(FullStackApplication.class, args);
@@ -70,18 +79,34 @@ public class FullStackApplication implements CommandLineRunner {
 		cidadeRepository.saveAll(Arrays.asList(cidade1, cidade2, cidade3));
 
 		Cliente cli1 = new Cliente(null, "Maria Silva","36378912377",
-				"maria@gmail.com",TipoCliente.PESSOAFISICA);
+				"maria@gmail.com", TipoCliente.PESSOAFISICA);
 		cli1.getTelefones().addAll(Arrays.asList("27363323","93838393"));
 //
-		Endereco e1 = new Endereco(null, "Rua Flores","300",
+		Endereco end1 = new Endereco(null, "Rua Flores","300",
 				"Apto 303","Jardim","38220834",cli1, cidade1);
-		Endereco e2 = new Endereco(null, "Av Matos","105",
+		Endereco end2 = new Endereco(null, "Av Matos","105",
 				"Sala 800","Centro","38777012",cli1, cidade2);
 
-//		cli1.getEnderecos().addAll(Arrays.asList(e1, e2));
+//		cli1.getEnderecos().addAll(Arrays.asList(end1, end2));
 
 		clienteRepository.saveAll(Collections.singletonList(cli1));
-		enderecoRepository.saveAll(Arrays.asList(e1, e2));
+		enderecoRepository.saveAll(Arrays.asList(end1, end2));
+
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyy HH:mm");
+
+		Pedido ped1 = new Pedido(null, sdf.parse("30/09/2017 10:32"), cli1, end1);
+		Pedido ped2 = new Pedido(null, sdf.parse("10/10/2017 19:35"), cli1, end2);
+
+		Pagamento pagto1 = new PagamentoComCartao(null, EstadoPagamento.QUITADO, ped1, 6);
+		ped1.setPagamento(pagto1);
+
+		Pagamento pagto2 = new PagamentoComBoleto(null, EstadoPagamento.PENDENTE, ped2, sdf.parse("20/10/2017 00:00"),null);
+		ped2.setPagamento(pagto2);
+
+		cli1.getPedidos().addAll(Arrays.asList(ped1, ped2));
+
+		pedidoRepository.saveAll(Arrays.asList(ped1, ped2));
+		pagamentoRepository.saveAll(Arrays.asList(pagto1, pagto2));
 
 	}
 }

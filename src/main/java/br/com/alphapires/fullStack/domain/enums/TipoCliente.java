@@ -1,4 +1,4 @@
-package br.com.alphapires.fullStack.domain;
+package br.com.alphapires.fullStack.domain.enums;
 
 import lombok.Getter;
 

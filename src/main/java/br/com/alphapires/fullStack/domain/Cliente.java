@@ -1,5 +1,6 @@
 package br.com.alphapires.fullStack.domain;
 
+import br.com.alphapires.fullStack.domain.enums.TipoCliente;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,12 +25,18 @@ public class Cliente implements Serializable {
 
     @JsonManagedReference
     @OneToMany(mappedBy = "cliente")
-    private List<Endereco> enderecos;
+    private List<Endereco> enderecos = new ArrayList<>();
 
     @ElementCollection
     @CollectionTable(name="TELEFONE")
     private Set<String> telefones = new HashSet<>();
     private Integer tipo;
+
+//    private List<Pagamento> pagamentos = new ArrayList<>();
+
+    @OneToMany (mappedBy ="cliente")
+    private List<Pedido> pedidos = new ArrayList<>();
+
 
     public Cliente(Integer id, String nome, String cpfOuCnpj, String email, TipoCliente tipoCliente) {
         this.id = id;
