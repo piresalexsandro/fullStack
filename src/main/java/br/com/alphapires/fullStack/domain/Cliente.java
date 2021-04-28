@@ -1,6 +1,7 @@
 package br.com.alphapires.fullStack.domain;
 
 import br.com.alphapires.fullStack.domain.enums.TipoCliente;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -32,8 +33,7 @@ public class Cliente implements Serializable {
     private Set<String> telefones = new HashSet<>();
     private Integer tipo;
 
-//    private List<Pagamento> pagamentos = new ArrayList<>();
-
+    @JsonBackReference
     @OneToMany (mappedBy ="cliente")
     private List<Pedido> pedidos = new ArrayList<>();
 

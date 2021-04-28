@@ -1,5 +1,7 @@
 package br.com.alphapires.fullStack.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,6 +20,7 @@ import java.util.Objects;
 @Entity
 public class ItemPedido implements Serializable {
 
+    @JsonIgnore
     @EmbeddedId
     private ItemPedidoPK id =  new ItemPedidoPK();
 
@@ -37,6 +40,7 @@ public class ItemPedido implements Serializable {
         return id.getProduto();
     }
 
+    @JsonIgnore
     public Pedido getPedido(){
         return id.getPedido();
     }

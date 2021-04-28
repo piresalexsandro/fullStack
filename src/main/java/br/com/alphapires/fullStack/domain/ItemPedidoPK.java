@@ -2,7 +2,9 @@ package br.com.alphapires.fullStack.domain;
 
 import lombok.*;
 
-import javax.persistence.*;
+import javax.persistence.Embeddable;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import java.io.Serializable;
 
 @Getter
@@ -20,6 +22,4 @@ public class ItemPedidoPK implements Serializable {
     @ManyToOne
     @JoinColumn(name = "produto_id")
     private Produto produto;
-
-
 }
