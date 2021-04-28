@@ -2,6 +2,7 @@ package br.com.alphapires.fullStack.domain;
 
 import br.com.alphapires.fullStack.domain.enums.TipoCliente;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,7 +25,6 @@ public class Cliente implements Serializable {
     private String cpfOuCnpj;
     private String email;
 
-    @JsonManagedReference
     @OneToMany(mappedBy = "cliente")
     private List<Endereco> enderecos = new ArrayList<>();
 
@@ -33,7 +33,7 @@ public class Cliente implements Serializable {
     private Set<String> telefones = new HashSet<>();
     private Integer tipo;
 
-    @JsonBackReference
+    @JsonIgnore
     @OneToMany (mappedBy ="cliente")
     private List<Pedido> pedidos = new ArrayList<>();
 

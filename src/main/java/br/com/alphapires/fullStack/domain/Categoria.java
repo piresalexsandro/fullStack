@@ -21,7 +21,6 @@ public class Categoria implements Serializable {
     private Integer id;
     private String nome;
 
-    @JsonManagedReference // para resolver referencia ciclica anotar do outro lado da associacao @JsonBackReference
     @ManyToMany(mappedBy = "categorias")
     private List<Produto> produtos = new ArrayList<>();
 
@@ -29,7 +28,6 @@ public class Categoria implements Serializable {
         this.id = id;
         this.nome = nome;
     }
-
 
     @Override
     public boolean equals(Object o) {
