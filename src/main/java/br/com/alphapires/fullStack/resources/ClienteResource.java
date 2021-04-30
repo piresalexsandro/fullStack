@@ -1,8 +1,6 @@
 package br.com.alphapires.fullStack.resources;
 
-import br.com.alphapires.fullStack.domain.Categoria;
 import br.com.alphapires.fullStack.domain.Cliente;
-import br.com.alphapires.fullStack.services.CategoriaService;
 import br.com.alphapires.fullStack.services.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,11 +17,11 @@ public class ClienteResource {
     private ClienteService service;
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<?> find(@PathVariable Integer id) {
+    public ResponseEntity<Cliente> find(@PathVariable Integer id) {
 
         Cliente cliente = null;
 
-        cliente = service.buscar(id);
+        cliente = service.find(id);
         return ResponseEntity.ok(cliente);
     }
 
