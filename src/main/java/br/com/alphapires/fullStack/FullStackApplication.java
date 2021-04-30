@@ -4,16 +4,19 @@ import br.com.alphapires.fullStack.domain.*;
 import br.com.alphapires.fullStack.domain.enums.EstadoPagamento;
 import br.com.alphapires.fullStack.domain.enums.TipoCliente;
 import br.com.alphapires.fullStack.repositories.*;
+import br.com.alphapires.fullStack.services.Scheduler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Collections;
 
 @SpringBootApplication
+@EnableScheduling
 public class FullStackApplication implements CommandLineRunner {
 
 	@Autowired
@@ -43,12 +46,16 @@ public class FullStackApplication implements CommandLineRunner {
 	@Autowired
 	ItemPedidoRepository itemPedidoRepository;
 
+	@Autowired
+	Scheduler verificadorDePegamentos;
+
 	public static void main(String[] args) {
 		SpringApplication.run(FullStackApplication.class, args);
 	}
 
 	@Override
 	public void run(String... args) throws Exception {
+
 		Categoria cat1 = new Categoria(null, "Informática");
 		Categoria cat2 = new Categoria(null, "Escritório");
 
@@ -84,13 +91,11 @@ public class FullStackApplication implements CommandLineRunner {
 		Cliente cli1 = new Cliente(null, "Maria Silva","36378912377",
 				"maria@gmail.com", TipoCliente.PESSOAFISICA);
 		cli1.getTelefones().addAll(Arrays.asList("27363323","93838393"));
-//
+
 		Endereco end1 = new Endereco(null, "Rua Flores","300",
 				"Apto 303","Jardim","38220834",cli1, cidade1);
 		Endereco end2 = new Endereco(null, "Av Matos","105",
 				"Sala 800","Centro","38777012",cli1, cidade2);
-
-//		cli1.getEnderecos().addAll(Arrays.asList(end1, end2));
 
 		clienteRepository.saveAll(Collections.singletonList(cli1));
 		enderecoRepository.saveAll(Arrays.asList(end1, end2));

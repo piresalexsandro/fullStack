@@ -4,10 +4,10 @@ import br.com.alphapires.fullStack.domain.Categoria;
 import br.com.alphapires.fullStack.services.CategoriaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import java.net.URI;
 
 @RestController
 @RequestMapping(value = "/categorias")
@@ -23,6 +23,17 @@ public class CategoriaResource {
 
         categoria = service.buscar(id);
         return ResponseEntity.ok(categoria);
+    }
+
+    @PostMapping
+    public ResponseEntity<Void> insert(@RequestBody Categoria obj){
+
+        obj = service.insere(obj);
+
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+                .buildAndExpand(obj.getId()).toUri();
+
+        return ResponseEntity.created(uri).build();
     }
 
 }
