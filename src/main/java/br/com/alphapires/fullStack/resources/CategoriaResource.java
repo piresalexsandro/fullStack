@@ -3,12 +3,14 @@ package br.com.alphapires.fullStack.resources;
 import br.com.alphapires.fullStack.domain.Categoria;
 import br.com.alphapires.fullStack.dto.CategoriaDTO;
 import br.com.alphapires.fullStack.services.CategoriaService;
+import br.com.alphapires.fullStack.utils.ConvertDomain;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
@@ -51,21 +53,23 @@ public class CategoriaResource {
     }
 
     @PostMapping
-    public ResponseEntity<Void> insert(@RequestBody Categoria obj){
+    public ResponseEntity<Void> insert(@Valid @RequestBody CategoriaDTO objDto){
 
-        obj = service.insert(obj);
+        Categoria categoria = ConvertDomain.convertCategoriaToDto(objDto);
+        categoria = service.insert(categoria);
 
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-                .buildAndExpand(obj.getId()).toUri();
+                .buildAndExpand(categoria.getId()).toUri();
 
         return ResponseEntity.created(uri).build();
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> update(@RequestBody Categoria obj, @PathVariable Integer id){
+    public ResponseEntity<Void> update(@Valid @RequestBody CategoriaDTO objDto, @PathVariable Integer id){
 
-        obj.setId(id);
-        obj = service.update(obj);
+        Categoria categoria = ConvertDomain.convertCategoriaToDto(objDto);
+        categoria.setId(id);
+        categoria = service.update(categoria);
 
         return ResponseEntity.noContent().build();
     }
@@ -75,6 +79,7 @@ public class CategoriaResource {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }
+
 
 
 }
