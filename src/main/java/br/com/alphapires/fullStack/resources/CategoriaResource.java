@@ -1,6 +1,7 @@
 package br.com.alphapires.fullStack.resources;
 
 import br.com.alphapires.fullStack.domain.Categoria;
+import br.com.alphapires.fullStack.dto.CategoriaDTO;
 import br.com.alphapires.fullStack.services.CategoriaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -8,6 +9,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/categorias")
@@ -16,11 +20,18 @@ public class CategoriaResource {
     @Autowired
     private CategoriaService service;
 
+    @GetMapping
+    public ResponseEntity<List<CategoriaDTO> > findAll() {
+        List<Categoria> categorias = service.findAll();
+        List<CategoriaDTO> dtoList =
+                categorias.stream().map(obj -> new CategoriaDTO(obj)).collect(Collectors.toList());
+
+        return ResponseEntity.ok(dtoList);
+    }
+
     @GetMapping(value = "/{id}")
     public ResponseEntity<Categoria> find(@PathVariable Integer id) {
-
         Categoria categoria = null;
-
         categoria = service.find(id);
         return ResponseEntity.ok(categoria);
     }
