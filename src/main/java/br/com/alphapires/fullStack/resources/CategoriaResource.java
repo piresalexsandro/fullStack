@@ -4,6 +4,7 @@ import br.com.alphapires.fullStack.domain.Categoria;
 import br.com.alphapires.fullStack.dto.CategoriaDTO;
 import br.com.alphapires.fullStack.services.CategoriaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -25,6 +26,19 @@ public class CategoriaResource {
         List<Categoria> categorias = service.findAll();
         List<CategoriaDTO> dtoList =
                 categorias.stream().map(obj -> new CategoriaDTO(obj)).collect(Collectors.toList());
+
+        return ResponseEntity.ok(dtoList);
+    }
+
+    @GetMapping("/page")
+    public ResponseEntity<Page<CategoriaDTO>>
+        findPage(@RequestParam(value = "pageNumber", defaultValue = "0") Integer pageNumber,
+                 @RequestParam(value = "linesPerPage", defaultValue = "24") Integer linesPerPage,
+                 @RequestParam(value = "orderBy", defaultValue = "nome") String orderBy,
+                 @RequestParam(value = "direction", defaultValue = "ASC") String direction) {
+
+        Page<Categoria> categorias = service.findPage(pageNumber,linesPerPage,orderBy, direction);
+        Page<CategoriaDTO> dtoList = categorias.map(obj -> new CategoriaDTO(obj));
 
         return ResponseEntity.ok(dtoList);
     }
