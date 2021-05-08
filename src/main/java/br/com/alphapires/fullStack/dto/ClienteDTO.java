@@ -1,6 +1,7 @@
 package br.com.alphapires.fullStack.dto;
 
 import br.com.alphapires.fullStack.domain.Cliente;
+import br.com.alphapires.fullStack.services.validation.ClienteUpdate;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,6 +16,7 @@ import java.io.Serializable;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@ClienteUpdate
 public class ClienteDTO implements Serializable {
 
     private Integer id;

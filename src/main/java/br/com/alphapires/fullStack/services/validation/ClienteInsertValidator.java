@@ -41,7 +41,6 @@ public class ClienteInsertValidator implements ConstraintValidator<ClienteInsert
 
         if (Objects.nonNull(repository.findByEmail(objDto.getEmail()))){
             fieldMessages.add(new FieldMessege("Email", "Email já existe"));
-
         }
 
         for (FieldMessege e : fieldMessages) {
@@ -49,6 +48,7 @@ public class ClienteInsertValidator implements ConstraintValidator<ClienteInsert
             context.buildConstraintViolationWithTemplate(e.getMessage())
                     .addPropertyNode(e.getFieldName()).addConstraintViolation();
         }
+
         return fieldMessages.isEmpty();
     }
 }
