@@ -1,4 +1,4 @@
-package br.com.alphapires.fullStack.resources;
+package br.com.alphapires.fullStack.dto;
 
 import br.com.alphapires.fullStack.domain.Cliente;
 import lombok.AllArgsConstructor;

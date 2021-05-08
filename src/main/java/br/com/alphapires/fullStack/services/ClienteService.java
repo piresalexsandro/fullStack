@@ -7,7 +7,7 @@ import br.com.alphapires.fullStack.domain.enums.TipoCliente;
 import br.com.alphapires.fullStack.dto.ClienteNewDTO;
 import br.com.alphapires.fullStack.repositories.ClienteRepository;
 import br.com.alphapires.fullStack.repositories.EnderecoRepository;
-import br.com.alphapires.fullStack.resources.ClienteDTO;
+import br.com.alphapires.fullStack.dto.ClienteDTO;
 import br.com.alphapires.fullStack.sevices.exception.DataIntegrityException;
 import br.com.alphapires.fullStack.sevices.exception.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;

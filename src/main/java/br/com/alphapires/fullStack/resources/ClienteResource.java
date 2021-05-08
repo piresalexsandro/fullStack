@@ -1,9 +1,9 @@
 package br.com.alphapires.fullStack.resources;
 
 import br.com.alphapires.fullStack.domain.Cliente;
+import br.com.alphapires.fullStack.dto.ClienteDTO;
 import br.com.alphapires.fullStack.dto.ClienteNewDTO;
 import br.com.alphapires.fullStack.services.ClienteService;
-import br.com.alphapires.fullStack.utils.ConvertEntityToDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
