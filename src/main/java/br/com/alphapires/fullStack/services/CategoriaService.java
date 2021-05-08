@@ -1,6 +1,7 @@
 package br.com.alphapires.fullStack.services;
 
 import br.com.alphapires.fullStack.domain.Categoria;
+import br.com.alphapires.fullStack.domain.Cliente;
 import br.com.alphapires.fullStack.repositories.CategoriaRepository;
 
 import br.com.alphapires.fullStack.sevices.exception.DataIntegrityException;
@@ -35,10 +36,14 @@ public class CategoriaService {
         categoria.setId(null);
         return repository.save(categoria);
     }
+        public Categoria update(Categoria objetoEnviado) {
+        Categoria objetoRecuperado = find(objetoEnviado.getId());
+        updateData(objetoRecuperado, objetoEnviado);
+        return repository.save(objetoRecuperado);
+    }
 
-    public Categoria update(Categoria categoria) {
-        find(categoria.getId());
-        return repository.save(categoria);
+    private void updateData(Categoria objetoRecuperado, Categoria objetoEnviado) {
+        objetoRecuperado.setNome(objetoEnviado.getNome());
     }
 
     public void delete(Integer id) {

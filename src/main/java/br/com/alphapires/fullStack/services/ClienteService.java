@@ -1,6 +1,5 @@
 package br.com.alphapires.fullStack.services;
 
-import br.com.alphapires.fullStack.domain.Categoria;
 import br.com.alphapires.fullStack.domain.Cliente;
 import br.com.alphapires.fullStack.repositories.ClienteRepository;
 import br.com.alphapires.fullStack.sevices.exception.DataIntegrityException;
@@ -36,15 +35,15 @@ public class ClienteService {
         return repository.save(categoria);
     }
 
-    public Cliente update(Cliente cliente) {
-        Cliente clienteRecuperado = find(cliente.getId());
-        updateData(clienteRecuperado, cliente);
-        return repository.save(clienteRecuperado);
+    public Cliente update(Cliente objetoEnviado) {
+        Cliente objetoRecuperado = find(objetoEnviado.getId());
+        updateData(objetoRecuperado, objetoEnviado);
+        return repository.save(objetoRecuperado);
     }
 
-    private void updateData(Cliente clienteRecuperado, Cliente cliente) {
-        clienteRecuperado.setNome(cliente.getNome());
-        clienteRecuperado.setEmail(cliente.getEmail());
+    private void updateData(Cliente objetoRecuperado, Cliente objetoEnviado) {
+        objetoRecuperado.setNome(objetoEnviado.getNome());
+        objetoRecuperado.setEmail(objetoEnviado.getEmail());
     }
 
     public void delete(Integer id) {
