@@ -3,7 +3,7 @@ package br.com.alphapires.fullStack.resources;
 import br.com.alphapires.fullStack.domain.Categoria;
 import br.com.alphapires.fullStack.dto.CategoriaDTO;
 import br.com.alphapires.fullStack.services.CategoriaService;
-import br.com.alphapires.fullStack.utils.ConvertDomain;
+import br.com.alphapires.fullStack.utils.ConvertEntityToDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +12,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,7 +23,7 @@ public class CategoriaResource {
     private CategoriaService service;
 
     @GetMapping
-    public ResponseEntity<List<CategoriaDTO> > findAll() {
+    public ResponseEntity<List<CategoriaDTO>> findAll() {
         List<Categoria> categorias = service.findAll();
         List<CategoriaDTO> dtoList =
                 categorias.stream().map(obj -> new CategoriaDTO(obj)).collect(Collectors.toList());
@@ -34,12 +33,12 @@ public class CategoriaResource {
 
     @GetMapping("/page")
     public ResponseEntity<Page<CategoriaDTO>>
-        findPage(@RequestParam(value = "pageNumber", defaultValue = "0") Integer pageNumber,
-                 @RequestParam(value = "linesPerPage", defaultValue = "24") Integer linesPerPage,
-                 @RequestParam(value = "orderBy", defaultValue = "nome") String orderBy,
-                 @RequestParam(value = "direction", defaultValue = "ASC") String direction) {
+    findPage(@RequestParam(value = "pageNumber", defaultValue = "0") Integer pageNumber,
+             @RequestParam(value = "linesPerPage", defaultValue = "24") Integer linesPerPage,
+             @RequestParam(value = "orderBy", defaultValue = "nome") String orderBy,
+             @RequestParam(value = "direction", defaultValue = "ASC") String direction) {
 
-        Page<Categoria> categorias = service.findPage(pageNumber,linesPerPage,orderBy, direction);
+        Page<Categoria> categorias = service.findPage(pageNumber, linesPerPage, orderBy, direction);
         Page<CategoriaDTO> dtoList = categorias.map(obj -> new CategoriaDTO(obj));
 
         return ResponseEntity.ok(dtoList);
@@ -53,9 +52,9 @@ public class CategoriaResource {
     }
 
     @PostMapping
-    public ResponseEntity<Void> insert(@Valid @RequestBody CategoriaDTO objDto){
+    public ResponseEntity<Void> insert(@Valid @RequestBody CategoriaDTO objDto) {
 
-        Categoria categoria = ConvertDomain.convertCategoriaToDto(objDto);
+        Categoria categoria = ConvertEntityToDTO.convertCategoriaToDto(objDto);
         categoria = service.insert(categoria);
 
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
@@ -65,9 +64,9 @@ public class CategoriaResource {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> update(@Valid @RequestBody CategoriaDTO objDto, @PathVariable Integer id){
+    public ResponseEntity<Void> update(@Valid @RequestBody CategoriaDTO objDto, @PathVariable Integer id) {
 
-        Categoria categoria = ConvertDomain.convertCategoriaToDto(objDto);
+        Categoria categoria = ConvertEntityToDTO.convertCategoriaToDto(objDto);
         categoria.setId(id);
         categoria = service.update(categoria);
 
@@ -79,7 +78,4 @@ public class CategoriaResource {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }
-
-
-
 }
