@@ -11,9 +11,8 @@ import java.io.Serializable;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class StandardError implements Serializable {
+public class FieldMessege implements Serializable {
 
-    private Integer status;
+    private String fieldName;
     private String message;
-    private Long timestamp;
 }
