@@ -1,6 +1,7 @@
 package br.com.alphapires.fullStack.resources;
 
 import br.com.alphapires.fullStack.domain.Cliente;
+import br.com.alphapires.fullStack.dto.ClienteNewDTO;
 import br.com.alphapires.fullStack.services.ClienteService;
 import br.com.alphapires.fullStack.utils.ConvertEntityToDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,9 +52,9 @@ public class ClienteResource {
     }
 
     @PostMapping
-    public ResponseEntity<Void> insert(@Valid @RequestBody ClienteDTO objDto) {
+    public ResponseEntity<Void> insert(@Valid @RequestBody ClienteNewDTO newDTO) {
 
-        Cliente cliente = ConvertEntityToDTO.convertClienteToDto(objDto);
+        Cliente cliente = service.convertClienteToDto(newDTO);
         cliente = service.insert(cliente);
 
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
@@ -65,7 +66,7 @@ public class ClienteResource {
     @PutMapping("/{id}")
     public ResponseEntity<Void> update(@Valid @RequestBody ClienteDTO objDto, @PathVariable Integer id) {
 
-        Cliente cliente = ConvertEntityToDTO.convertClienteToDto(objDto);
+        Cliente cliente = service.convertClienteToDto(objDto);
         cliente.setId(id);
         cliente = service.update(cliente);
 
