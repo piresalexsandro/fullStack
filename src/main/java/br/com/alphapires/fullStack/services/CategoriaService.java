@@ -1,9 +1,7 @@
 package br.com.alphapires.fullStack.services;
 
 import br.com.alphapires.fullStack.domain.Categoria;
-import br.com.alphapires.fullStack.domain.Cliente;
 import br.com.alphapires.fullStack.repositories.CategoriaRepository;
-
 import br.com.alphapires.fullStack.sevices.exception.DataIntegrityException;
 import br.com.alphapires.fullStack.sevices.exception.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +30,11 @@ public class CategoriaService {
                 "Objeto não encontrado! Id: " + id + ", Tipo: " + Categoria.class.getName()));
     }
 
+    public Page<Categoria> findPage(Integer pageNumber, Integer linesPerPage, String orderBy, String direction){
+        PageRequest pageRequest = PageRequest.of(pageNumber, linesPerPage, Sort.Direction.valueOf(direction), orderBy);
+        return repository.findAll(pageRequest);
+    }
+
     public Categoria insert(Categoria categoria) {
         categoria.setId(null);
         return repository.save(categoria);
@@ -53,10 +56,5 @@ public class CategoriaService {
         } catch (DataIntegrityViolationException e){
             throw new DataIntegrityException("Nao e possivel excluir uma categoria que possua produtos");
         }
-    }
-
-    public Page<Categoria> findPage(Integer pageNumber, Integer linesPerPage, String orderBy, String direction){
-        PageRequest pageRequest = PageRequest.of(pageNumber, linesPerPage, Sort.Direction.valueOf(direction), orderBy);
-        return repository.findAll(pageRequest);
     }
 }
