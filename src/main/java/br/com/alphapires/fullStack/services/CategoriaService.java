@@ -39,7 +39,8 @@ public class CategoriaService {
         categoria.setId(null);
         return repository.save(categoria);
     }
-        public Categoria update(Categoria objetoEnviado) {
+
+    public Categoria update(Categoria objetoEnviado) {
         Categoria objetoRecuperado = find(objetoEnviado.getId());
         updateData(objetoRecuperado, objetoEnviado);
         return repository.save(objetoRecuperado);

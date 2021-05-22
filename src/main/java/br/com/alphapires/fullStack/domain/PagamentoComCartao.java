@@ -1,6 +1,7 @@
 package br.com.alphapires.fullStack.domain;
 
 import br.com.alphapires.fullStack.domain.enums.EstadoPagamento;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,6 +13,7 @@ import javax.persistence.Entity;
 @Setter
 @NoArgsConstructor
 @Entity
+@JsonTypeName("pagamentoComCartao")
 public class PagamentoComCartao extends Pagamento {
 
     private Integer numeroDeParcelas;
